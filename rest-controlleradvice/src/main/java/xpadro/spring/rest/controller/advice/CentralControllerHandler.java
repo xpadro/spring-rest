@@ -20,7 +20,7 @@ public class CentralControllerHandler {
     }
 	
 	@ExceptionHandler({PersonNotFoundException.class})
-	public ResponseEntity<String> handleProductNotFound(PersonNotFoundException pe) {
+	public ResponseEntity<String> handlePersonNotFound(PersonNotFoundException pe) {
 		return new ResponseEntity<String>(pe.getMessage(), HttpStatus.NOT_FOUND);
 	}
 	
