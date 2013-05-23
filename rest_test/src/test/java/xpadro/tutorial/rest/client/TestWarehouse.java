@@ -20,7 +20,7 @@ import xpadro.tutorial.rest.model.Warehouse;
 @ContextConfiguration(locations={
 	"classpath:xpadro/tutorial/rest/configuration/root-context.xml",
 	"classpath:xpadro/tutorial/rest/configuration/app-context.xml"})
-public class WarehouseTesting {
+public class TestWarehouse {
 	private static final int WAREHOUSE_ID = 1;
 	private static final int PRODUCT_ID = 4;
 	
@@ -31,7 +31,7 @@ public class WarehouseTesting {
 	 */
 	@Test
 	public void getWarehouse() {
-		String uri = "http://localhost:8081/rest_test/spring/warehouses/{warehouseId}";
+		String uri = "http://localhost:8080/rest_test/spring/warehouses/{warehouseId}";
 		Warehouse warehouse = restTemplate.getForObject(uri, Warehouse.class, WAREHOUSE_ID);
 		assertNotNull(warehouse);
 		assertEquals("WAR_BCN_004", warehouse.getName());
@@ -43,7 +43,7 @@ public class WarehouseTesting {
 	@Test
 	public void addProduct() {
 		//Adds the new product
-		String uri = "http://localhost:8081/rest_test/spring/warehouses/{warehouseId}/products";
+		String uri = "http://localhost:8080/rest_test/spring/warehouses/{warehouseId}/products";
 		Product product = new Product(PRODUCT_ID, "PROD_999");
 		URI newProductLocation = restTemplate.postForLocation(uri, product, WAREHOUSE_ID);
 		
@@ -58,7 +58,7 @@ public class WarehouseTesting {
 	 */
 	@Test
 	public void removeProduct() {
-		String uri = "http://localhost:8081/rest_test/spring/warehouses/{warehouseId}/products/{productId}";
+		String uri = "http://localhost:8080/rest_test/spring/warehouses/{warehouseId}/products/{productId}";
 		restTemplate.delete(uri, WAREHOUSE_ID, PRODUCT_ID);
 		
 		try {
