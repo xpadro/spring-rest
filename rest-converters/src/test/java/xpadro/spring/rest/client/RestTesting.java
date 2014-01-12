@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -26,6 +28,9 @@ import xpadro.spring.rest.model.User;
 	"classpath:xpadro/spring/rest/configuration/app-context.xml"})
 public class RestTesting {
 	private RestTemplate restTemplate = new RestTemplate();
+	
+	@Autowired
+	private MongoOperations mongoOps;
 
 	@Before
 	public void setup() {
@@ -34,6 +39,16 @@ public class RestTesting {
 		converters.add(new Jaxb2RootElementHttpMessageConverter());
 		converters.add(new MappingJacksonHttpMessageConverter());
 		restTemplate.setMessageConverters(converters);
+		
+		initializeDatabase();
+	}
+	
+	private void initializeDatabase() {
+		mongoOps.dropCollection("user");
+		mongoOps.dropCollection("car");
+		
+		mongoOps.insert(new User(1, "Xavi", "Padro"));
+		mongoOps.insert(new Car(1, "Ferrari", "GTO"));
 	}
 
 	/**
