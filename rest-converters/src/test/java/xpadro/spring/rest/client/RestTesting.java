@@ -42,7 +42,7 @@ public class RestTesting {
 	 */
 	@Test
 	public void getUser() {
-		String uri = "http://localhost:8081/rest-converters/spring/users/{userId}";
+		String uri = "http://localhost:8080/rest-converters/spring/users/{userId}";
 		User user = restTemplate.getForObject(uri, User.class, 1l);
 		assertNotNull(user);
 		assertEquals("Xavi", user.getName());
@@ -55,7 +55,7 @@ public class RestTesting {
 	 */
 	@Test
 	public void getUserName() {
-		String uri = "http://localhost:8081/rest-converters/spring/usernames/{userId}";
+		String uri = "http://localhost:8080/rest-converters/spring/usernames/{userId}";
 		String username = restTemplate.getForObject(uri, String.class, 1l);
 		assertNotNull(username);
 		assertEquals("Xavi Padro", username);
@@ -67,7 +67,7 @@ public class RestTesting {
 	 */
 	@Test
 	public void getCar() {
-		String uri = "http://localhost:8081/rest-converters/spring/cars/{carId}";
+		String uri = "http://localhost:8080/rest-converters/spring/cars/{carId}";
 		Car car = restTemplate.getForObject(uri, Car.class, 1l);
 		assertNotNull(car);
 		assertEquals("Ferrari", car.getBrand());
