@@ -14,6 +14,6 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	@Override
 	public User getUser(long id) {
-		return mongoOps.findById(1, User.class);
+		return mongoOps.findById(id, User.class);
 	}
 }
