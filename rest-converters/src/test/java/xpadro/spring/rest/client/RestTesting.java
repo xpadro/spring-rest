@@ -28,6 +28,7 @@ import xpadro.spring.rest.model.User;
 	"classpath:xpadro/spring/rest/configuration/root-context.xml",
 	"classpath:xpadro/spring/rest/configuration/app-context.xml"})
 public class RestTesting {
+	private static final String BASE_URI = "http://localhost:8080/rest-converters/spring/";
 	private RestTemplate restTemplate = new RestTemplate();
 	
 	@Autowired
@@ -59,7 +60,7 @@ public class RestTesting {
 	 */
 	@Test
 	public void getUser() {
-		String uri = "http://localhost:8080/rest-converters/spring/users/{userId}";
+		String uri = BASE_URI + "users/{userId}";
 		User user = restTemplate.getForObject(uri, User.class, 1l);
 		assertNotNull(user);
 		assertEquals("Xavi", user.getName());
@@ -71,7 +72,7 @@ public class RestTesting {
 	 */
 	@Test
 	public void getUserName() {
-		String uri = "http://localhost:8080/rest-converters/spring/usernames/{userId}";
+		String uri = BASE_URI + "usernames/{userId}";
 		String username = restTemplate.getForObject(uri, String.class, 1l);
 		assertNotNull(username);
 		assertEquals("Xavi Padro", username);
@@ -83,7 +84,7 @@ public class RestTesting {
 	 */
 	@Test
 	public void getCar() {
-		String uri = "http://localhost:8080/rest-converters/spring/cars/{carId}";
+		String uri = BASE_URI + "cars/{carId}";
 		Car car = restTemplate.getForObject(uri, Car.class, 1l);
 		assertNotNull(car);
 		assertEquals("Ferrari", car.getBrand());
@@ -94,9 +95,9 @@ public class RestTesting {
 	 */
 	@Test
 	public void insertUser() {
-		String uri = "http://localhost:8080/rest-converters/spring/users";
+		String uri = BASE_URI + "users";
 		User user = new User(2, "John", "Smith");
 		URI newUserLocation = restTemplate.postForLocation(uri, user);
-		assertEquals("http://localhost:8080/rest-converters/spring/users/2", newUserLocation);
+		assertEquals("http://localhost:8080/rest-converters/spring/users/2", newUserLocation.toString());
 	}
 }
