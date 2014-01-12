@@ -3,6 +3,7 @@ package xpadro.spring.rest.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class RestTesting {
 		mongoOps.insert(new Car(1, "Ferrari", "GTO"));
 	}
 
+	
 	/**
 	 * Tests accessing to an existing user
 	 * This test should use the MappingJacksonHttpMessageConverter
@@ -62,7 +64,6 @@ public class RestTesting {
 		assertNotNull(user);
 		assertEquals("Xavi", user.getName());
 	}
-	
 	
 	/**
 	 * Tests accessing to an existing user
@@ -86,5 +87,16 @@ public class RestTesting {
 		Car car = restTemplate.getForObject(uri, Car.class, 1l);
 		assertNotNull(car);
 		assertEquals("Ferrari", car.getBrand());
+	}
+	
+	/**
+	 * Tests a new user insertion
+	 */
+	@Test
+	public void insertUser() {
+		String uri = "http://localhost:8080/rest-converters/spring/users";
+		User user = new User(2, "John", "Smith");
+		URI newUserLocation = restTemplate.postForLocation(uri, user);
+		assertEquals("http://localhost:8080/rest-converters/spring/users/2", newUserLocation);
 	}
 }

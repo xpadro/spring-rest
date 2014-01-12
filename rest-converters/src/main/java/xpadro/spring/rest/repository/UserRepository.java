@@ -15,4 +15,10 @@ public interface UserRepository {
 	 * @return the user
 	 */
 	public User getUser(long id);
+	
+	/**
+	 * Inserts a user into the DB
+	 * @param user
+	 */
+	public void insertUser(User user);
 }
