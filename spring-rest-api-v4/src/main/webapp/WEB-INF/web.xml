@@ -1,0 +1,32 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Spring MVC - RESTful web services</display-name>
+  
+  <!-- Root context configuration -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:xpadro/spring/web/configuration/root-context.xml</param-value>
+  </context-param>
+  
+  <!-- Loads Spring root context, which will be the parent context -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!-- Spring servlet -->
+  <servlet>
+  	<servlet-name>springServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:xpadro/spring/web/configuration/app-context.xml</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>springServlet</servlet-name>
+  	<url-pattern>/spring/*</url-pattern>
+  </servlet-mapping>
+</web-app>
