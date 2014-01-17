@@ -31,9 +31,11 @@ public class SeriesController {
 	/**
 	 * Returns all registered series
 	 * @return
+	 * @throws InterruptedException 
 	 */
 	@RequestMapping(method=RequestMethod.GET)
-	public Series[] getAllSeries() {
+	public Series[] getAllSeries() throws InterruptedException {
+		Thread.sleep(2000);	//pause to better show sync/async RestTemplate behavior
 		return seriesService.getAllSeries();
 	}
 	

@@ -7,10 +7,14 @@ import static org.junit.Assert.fail;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -23,6 +27,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,7 +39,10 @@ import xpadro.spring.web.model.Series;
 	"classpath:xpadro/spring/web/configuration/app-context.xml"})
 public class SeriesFunctionalTesting {
 	private static final String BASE_URI = "http://localhost:8080/spring-rest-api-v4/spring/series";
+	private static Logger logger = LoggerFactory.getLogger(SeriesFunctionalTesting.class);
+	
 	private RestTemplate restTemplate = new RestTemplate();
+	private AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 	
 	@Autowired
 	private MongoOperations mongoOps;
@@ -64,8 +72,24 @@ public class SeriesFunctionalTesting {
 	
 	@Test
 	public void getAllSeries() {
+		logger.info("Calling sync /series");
 		Series[] series = restTemplate.getForObject(BASE_URI, Series[].class);
+		logger.info("Doing other sync stuff...");
+		validateList(series);
+	}
+	
+	@Test
+	public void getAllSeriesAsync() throws InterruptedException, ExecutionException {
+		logger.info("Calling async /series");
+		Future<ResponseEntity<Series[]>> futureEntity = asyncRestTemplate.getForEntity(BASE_URI, Series[].class);
+		logger.info("Doing other async stuff...");
 		
+		ResponseEntity<Series[]> entity = futureEntity.get();
+		Series[] series = entity.getBody();
+		validateList(series);
+	}
+	
+	private void validateList(Series[] series) {
 		assertNotNull(series);
 		assertEquals(2, series.length);
 		assertEquals(1L, series[0].getId());
@@ -77,7 +101,6 @@ public class SeriesFunctionalTesting {
 		assertEquals("USA", series[1].getCountry());
 		assertEquals("Drama", series[1].getGenre());
 	}
-	
 	
 	@Test
 	public void getJsonSeries() {
