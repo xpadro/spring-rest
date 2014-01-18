@@ -2,22 +2,13 @@ package xpadro.spring.web.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,27 +16,14 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import xpadro.spring.web.model.Series;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={
-	"classpath:xpadro/spring/web/configuration/root-context.xml",
-	"classpath:xpadro/spring/web/configuration/app-context.xml"})
-public class SeriesFunctionalTesting {
+public class SeriesFunctionalTest extends SeriesFunctionalBaseTests {
 	private static final String BASE_URI = "http://localhost:8080/spring-rest-api-v4/spring/series";
-	private static Logger logger = LoggerFactory.getLogger(SeriesFunctionalTesting.class);
-	
 	private RestTemplate restTemplate = new RestTemplate();
-	private AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
-	
-	@Autowired
-	private MongoOperations mongoOps;
 	
 	@Before
 	public void setup() {
@@ -58,38 +36,11 @@ public class SeriesFunctionalTesting {
 		initializeDatabase();
 	}
 	
-	private void initializeDatabase() {
-		try {
-			mongoOps.dropCollection("series");
-			
-			mongoOps.insert(new Series(1, "The walking dead", "USA", "Thriller"));
-			mongoOps.insert(new Series(2, "Homeland", "USA", "Drama"));
-		} catch (DataAccessResourceFailureException e) {
-			fail("MongoDB instance is not running");
-		}
-	}
-
 	
 	@Test
 	public void getAllSeries() {
-		logger.info("Calling sync /series");
 		Series[] series = restTemplate.getForObject(BASE_URI, Series[].class);
-		logger.info("Doing other sync stuff...");
-		validateList(series);
-	}
-	
-	@Test
-	public void getAllSeriesAsync() throws InterruptedException, ExecutionException {
-		logger.info("Calling async /series");
-		Future<ResponseEntity<Series[]>> futureEntity = asyncRestTemplate.getForEntity(BASE_URI, Series[].class);
-		logger.info("Doing other async stuff...");
-		
-		ResponseEntity<Series[]> entity = futureEntity.get();
-		Series[] series = entity.getBody();
-		validateList(series);
-	}
-	
-	private void validateList(Series[] series) {
+
 		assertNotNull(series);
 		assertEquals(2, series.length);
 		assertEquals(1L, series[0].getId());

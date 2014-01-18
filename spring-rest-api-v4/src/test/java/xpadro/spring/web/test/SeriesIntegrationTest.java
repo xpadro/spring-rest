@@ -27,7 +27,7 @@ import xpadro.spring.web.service.SeriesService;
 @ContextConfiguration(locations={
 	"classpath:xpadro/spring/web/test/configuration/test-root-context.xml",
 	"classpath:xpadro/spring/web/configuration/app-context.xml"})
-public class SeriesIntegrationTesting {
+public class SeriesIntegrationTest {
 	private static final String BASE_URI = "/series";
 	
 	private MockMvc mockMvc;
