@@ -30,7 +30,7 @@ Samples of RESTful web services using Spring MVC
 - <b>spring-rest-api-v32</b>: A Spring MVC RESTful web application. This app implements a REST API which accesses a MongoDB database in order to handle data from TV series. It also contains examples on how to implement integration tests (mockMvc) and functional tests (restTemplate). This project has been implemented in Spring 3.2.3 version and has been used as a base to implement the <i>spring-rest-api-v4</i> project (also in this repository).
 
   Blog post related to this post: N/A
-<br />
+
 
 - spring-rest-api-v4: This project is the result of taking <i>spring-rest-api-v32</i> (also in this repository) and upgrading it to version 4.0.0.RELEASE. It also contains some of the improvements included in this version of Spring, as commented in the blog entry.
 
