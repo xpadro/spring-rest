@@ -32,7 +32,7 @@ Samples of RESTful web services using Spring MVC
   Blog post related to this post: N/A
 
 
-- spring-rest-api-v4: This project is the result of taking <i>spring-rest-api-v32</i> (also in this repository) and upgrading it to version 4.0.0.RELEASE. It also contains some of the improvements included in this version of Spring, as commented in the blog entry.
+- <b>spring-rest-api-v4</b>: This project is the result of taking <i>spring-rest-api-v32</i> (also in this repository) and upgrading it to version 4.0.0.RELEASE. It also contains some of the improvements included in this version of Spring, as commented in the blog entry.
 
   Blog post related to this post: 
   http://xpadro.blogspot.com.es/2014/01/migrating-spring-mvc-restful-web.html
