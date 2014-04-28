@@ -11,7 +11,7 @@
 	<import resource="db-context.xml"/>
 
 	<!-- Detects annotations like @Component, @Service, @Controller, @Repository, @Configuration -->
-	<context:component-scan base-package="xpadro.spring.web,controller,xpadro.spring.web.service"/>
+	<context:component-scan base-package="xpadro.spring.web.controller,xpadro.spring.web.service"/>
 	
 	<!-- Detects MVC annotations like @RequestMapping -->
 	<mvc:annotation-driven/>
