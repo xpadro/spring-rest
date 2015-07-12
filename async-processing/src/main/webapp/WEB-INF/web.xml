@@ -3,5 +3,5 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Asynchronous Processing</display-name>
+  <display-name>Asynchronous Processing with Spring</display-name>
 </web-app>
