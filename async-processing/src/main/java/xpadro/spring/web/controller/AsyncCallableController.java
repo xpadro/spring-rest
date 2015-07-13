@@ -23,7 +23,7 @@ public class AsyncCallableController {
     @RequestMapping(value = "/callable", method = RequestMethod.GET, produces = "text/html")
     public Callable<String> executeSlowTask() {
         logger.info("Request received");
-        Callable<String> callable = () -> taskService.execute();
+        Callable<String> callable = taskService::execute;
         logger.info("Servlet thread released");
 
         return callable;

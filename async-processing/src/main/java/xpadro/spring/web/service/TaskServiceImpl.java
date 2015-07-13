@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public String execute() {
